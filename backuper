@@ -19,10 +19,10 @@ echo -e "[+] - Doing backup!\n"
 adb backup -f $1.ab -noapk $1
 
 # Revert
-echo -e "[+] - Reverting the ab file to tar file!\n"
+echo -e "\n[+] - Reverting the ab file to tar file!\n"
 dd if=$1.ab bs=24 skip=1 | python -c "import zlib,sys;sys.stdout.write(zlib.decompress(sys.stdin.read()))" > $1.tar
 
 # Extract
-echo -e "[+] - Decompressing tar file and seeing the file content!"
+echo -e "\n[+] - Decompressing tar file and seeing the file content!"
 tar -xvf $1.tar
 ls
