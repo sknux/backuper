@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo -e "[!] - This script requires that you stay connected in your device!\n"
+
+#Verificando se tem ADB
+if [ -z /usr/bin/adb ]
+then
+        sudo apt install adb -y
+fi
+
+if [ -z "$1" ]
+then
+	echo "Usage: $0 com.example.apk"
+	exit
+fi
+
+#Fazendo o backup
+echo -e "[+] - Doing backup!\n"
+adb backup -f $1.ab -noapk $1
+
+#Convertendo o arquivo
+echo -e "[+] - Reverting the ab file to tar file!\n"
+dd if=$1.ab bs=24 skip=1 | python -c "import zlib,sys;sys.stdout.write(zlib.decompress(sys.stdin.read()))" > $1.tar
+
+#Extraindo os arquivos do backup
+echo -e "[+] - Decompressing tar file and seeing the file content!"
+tar -xvf $1.tar
+ls
