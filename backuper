@@ -2,7 +2,7 @@
 
 echo -e "[!] - This script requires that you stay connected in your device!\n"
 
-#Verificando se tem ADB
+#Verifying if have ADB
 if [ -z /usr/bin/adb ]
 then
         sudo apt install adb -y
